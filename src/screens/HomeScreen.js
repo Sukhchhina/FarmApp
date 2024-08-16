@@ -11,7 +11,7 @@ export default function HomeScreen({ navigation }) {
     try {
       await signOut();
       Alert.alert('You have been signed out.');
-      navigation.navigate('Main'); // Navigate back to the sign-in screen
+      navigation.navigate('SignIn'); // Navigate back to the sign-in screen
     } catch (error) {
       console.log('Error signing out: ', error);
       Alert.alert('Error signing out:', error.message);

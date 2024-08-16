@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { signIn as amplifySignIn } from 'aws-amplify/auth';
+import { signIn as amplifySignIn,signOut } from 'aws-amplify/auth';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const SignInScreen = ({ navigation }) => {
@@ -14,6 +14,8 @@ const SignInScreen = ({ navigation }) => {
     }
 
     try {
+      await signOut({ global: true });
+
       await amplifySignIn({ username, password });
        {
         Alert.alert('Sign in successful!');
@@ -27,7 +29,7 @@ const SignInScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Icon name="leaf" size={80} color="#4CAF50" />
+        
         <Text style={styles.title}>Welcome Back!</Text>
       </View>
       
@@ -57,6 +59,9 @@ const SignInScreen = ({ navigation }) => {
 
       <TouchableOpacity style={styles.signupLink} onPress={() => navigation.navigate('SignUp')}>
         <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.signupLink} onPress={() => navigation.navigate('ForgotPassword')}>
+        <Text style={styles.signupText}>Forgot Password</Text>
       </TouchableOpacity>
     </View>
   );

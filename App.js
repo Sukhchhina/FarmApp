@@ -5,10 +5,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Image } from 'react-native';
+
 
 // Import Screens
+import SplashScreen from './src/screens/SplashScreen';
+
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
+import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
+import ResetPasswordScreen from './src/screens/ResetPasswordScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import MyFarmScreen from './src/screens/MyFarmScreen';
 import CropsScreen from './src/screens/CropsScreen';
@@ -24,19 +30,23 @@ function MainTabNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          let iconName;
+          let iconSource;
+
 
           if (route.name === 'Home') {
-            iconName = 'home';
+            iconSource = require('./src/assets/icons_home.png');
           } else if (route.name === 'MyFarm') {
-            iconName = 'tree';
+            iconSource = require('./src/assets/icons_farm.png');
           } else if (route.name === 'Crops') {
-            iconName = 'leaf';
+            iconSource = require('./src/assets/icons_crops.png');
           } else if (route.name === 'Profile') {
-            iconName = 'user';
+            iconSource = require('./src/assets/icons_account.png');
           }
 
-          return <Icon name={iconName} size={size} color={color} />;
+          return (<Image
+          source={iconSource}
+          style={{ width: size, height: size, tintColor: color }}
+        />);
         },
       })}
       tabBarOptions={{
@@ -57,9 +67,12 @@ function AppNavigator() {
   return (
     <Stack.Navigator>
       {/* Authentication screens */}
+      <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
       <Stack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
       <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
-      
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ headerShown: false }} />
+          
       {/* Main app screen with tabs */}
       <Stack.Screen name="Main" component={MainTabNavigator} options={{ headerShown: false }} />
     </Stack.Navigator>
